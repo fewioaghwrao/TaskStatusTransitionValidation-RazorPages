@@ -1,0 +1,30 @@
+﻿@page
+@model ErrorModel
+@{
+    ViewData["Title"] = "システムエラー";
+}
+
+<section class="error-page">
+    <div class="error-card">
+        <div class="error-icon" aria-hidden="true">⚠</div>
+        <p class="error-label">500 Internal Server Error</p>
+        <h1 class="error-title">申し訳ありません。エラーが発生しました。</h1>
+        <p class="error-description">
+            処理中に問題が発生したため、画面を表示できませんでした。<br />
+            お手数ですが、しばらく時間をおいてから再度お試しください。
+        </p>
+
+        @if (Model.ShowRequestId)
+        {
+            <div class="error-request-id">
+                <span class="error-request-id__label">お問い合わせ番号</span>
+                <code>@Model.RequestId</code>
+            </div>
+        }
+
+        <div class="error-actions">
+            <a asp-page="/Index" class="btn-primary">トップへ戻る</a>
+            <button type="button" class="btn-secondary" onclick="history.back()">前の画面へ戻る</button>
+        </div>
+    </div>
+</section>
