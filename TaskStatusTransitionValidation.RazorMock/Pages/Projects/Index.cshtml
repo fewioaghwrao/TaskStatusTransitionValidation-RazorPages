@@ -17,17 +17,19 @@
         </div>
     </div>
 
+    <link rel="stylesheet" href="~/css/projects.css" asp-append-version="true" />
+
     <div class="projects-container">
         <header class="projects-header">
             <div>
-                <div class="projects-badge">
+                <div class="projects-list-badge">
                     <span class="projects-badge__dot"></span>
                     小規模チーム向け 案件・タスク管理
                 </div>
 
-                <h1 class="projects-title">案件一覧</h1>
+                <h1 class="projects-list-title">案件一覧</h1>
 
-                <p class="projects-subtitle">
+                <p class="projects-list-subtitle">
                     参画中の案件を確認し、タスクの状態遷移ルールをチェックできます。
                 </p>
             </div>
@@ -51,7 +53,7 @@
                 <div class="card-topbar__actions">
                     @if (Model.IsLeader)
                     {
-                        <a asp-page="/Projects/New" class="btn btn-success js-show-loader">＋ 新規作成</a>
+                        <a asp-page="/Projects/New" class="btn btn-primary-action js-show-loader">＋ 新規作成</a>
                     }
 
                     <a asp-page="/Projects/Index"
@@ -73,9 +75,9 @@
                                    placeholder="プロジェクト名で検索" />
                         </div>
 
-                        <button type="submit" class="btn btn-dark js-show-loader">検索</button>
+                        <button type="submit" class="btn btn-dark search-btn js-show-loader">検索</button>
 
-                        <a asp-page="/Projects/Index" class="btn btn-dark js-show-loader">クリア</a>
+                        <a asp-page="/Projects/Index" class="btn btn-dark clear-btn js-show-loader">クリア</a>
 
                         <select asp-for="PageSize" class="select" onchange="this.form.submit()">
                             <option value="5">5件/ページ</option>
@@ -83,7 +85,7 @@
                             <option value="20">20件/ページ</option>
                         </select>
 
-                        <div class="searchbar__count">
+                        <div class="searchbar-list__count">
                             @(string.IsNullOrWhiteSpace(Model.Q)
                                                     ? $"表示: {Model.TotalActiveFiltered} 件"
                                                     : $"検索結果: {Model.TotalActiveFiltered} 件")
@@ -104,23 +106,23 @@
                     <div class="project-list">
                         @foreach (var p in Model.ActivePageItems)
                         {
-                            <div class="project-row">
+                            <div class="project-list-row">
                                 <div class="project-row__main">
                                     <a asp-page="/Projects/Tasks/Index"
                                        asp-route-projectId="@p.Id"
-                                       class="project-link js-show-loader">
+                                       class="project-list-link js-show-loader">
                                         @p.Name
                                     </a>
-                                    <div class="project-meta">Project ID: @p.Id</div>
+                                    <div class="project-list-meta">Project ID: @p.Id</div>
                                 </div>
 
-                                <span class="status-pill status-pill--active">表示中</span>
+                                <span class="status-pill status-pill-list-active">表示中</span>
                             </div>
                         }
 
                         @if (Model.TotalPages > 1)
                         {
-                            <div class="pager">
+                            <div class="pager-list">
                                 <a asp-page="/Projects/Index"
                                    asp-route-q="@Model.Q"
                                    asp-route-page="@(Model.SafePage - 1)"
@@ -145,7 +147,7 @@
                     </div>
                 }
 
-                <p class="footnote">
+                <p class="footnote-list">
                     ※ 件数が増えた場合は、API側で q / page / pageSize を受けて DBで絞り込み＋Skip/Take に拡張できます。
                 </p>
             </div>

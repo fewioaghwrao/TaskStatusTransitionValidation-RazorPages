@@ -225,9 +225,9 @@ a {
     padding: 10px 12px;
     border-radius: 12px;
     border: 1px solid #2a2a2a;
-    background: #171717;
+    background: #111827;
     color: #cbd5e1;
-    font-size: 12px;
+    font-size: 13px;
     white-space: nowrap;
     max-width: 320px;
     overflow: hidden;
@@ -288,47 +288,6 @@ a {
 .searchbar__count {
     color: #9ca3af;
     font-size: 12px;
-}
-
-.input,
-.select {
-    width: 100%;
-    padding: 10px 12px;
-    border-radius: 12px;
-    border: 1px solid #2a2a2a;
-    background: #171717;
-    color: #e5e7eb;
-    outline: none;
-    box-sizing: border-box;
-}
-
-.select {
-    width: auto;
-}
-
-.btn {
-    display: inline-block;
-    padding: 10px 12px;
-    border-radius: 12px;
-    text-decoration: none;
-    border: 1px solid #2a2a2a;
-    cursor: pointer;
-    font-size: 12px;
-    white-space: nowrap;
-    background: #171717;
-    color: #e5e7eb;
-}
-
-.btn-dark {
-    background: #171717;
-    color: #e5e7eb;
-    border: 1px solid #2a2a2a;
-}
-
-.btn-success {
-    border: 1px solid rgba(16,185,129,.28);
-    background: rgba(16,185,129,.10);
-    color: #d1fae5;
 }
 
 .is-disabled {
@@ -554,18 +513,52 @@ a {
 .btn-dark {
     background: #171717;
     color: #e5e7eb;
+    border: 1px solid #2a2a2a;
 }
 
-.input,
-.select {
+.search-btn {
+    background: #273449;
+    border-color: #3b82f6;
+    color: #eff6ff;
+}
+
+    .search-btn:hover {
+        filter: brightness(1.08);
+    }
+
+.clear-btn {
+    background: #171717;
+    border-color: #3a3a3a;
+    color: #cbd5e1;
+}
+
+.btn-success {
+    border: 1px solid rgba(16,185,129,.28);
+    background: rgba(16,185,129,.10);
+    color: #d1fae5;
+}
+
+.input {
     min-height: 40px;
     padding: 9px 10px;
-    border-radius: 12px;
-    border: 1px solid #2a2a2a;
-    background: #121212;
+    border-radius: 10px;
+    border: 1px solid #374151;
+    background: #111827;
     color: #e5e7eb;
     outline: none;
     font-size: 12px;
+}
+
+.select {
+    width: auto;
+    min-height: 40px;
+    padding: 9px 10px;
+    border-radius: 10px;
+    border: 1px solid #374151;
+    background: #111827;
+    color: #e5e7eb;
+    outline: none;
+    font-size: 13px;
 }
 
 .alert-error,

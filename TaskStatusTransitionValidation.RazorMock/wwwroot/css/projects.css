@@ -1,0 +1,88 @@
+﻿.projects-list-title {
+    margin: 12px 0 8px;
+    font-size: 28px;
+    font-weight: 800;
+}
+
+.projects-list-subtitle {
+    margin: 0;
+    color: #cbd5e1;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.btn-primary-action {
+    border: 1px solid rgba(37, 99, 235, .38);
+    background: rgba(29, 78, 216, .22);
+    color: #dbeafe;
+}
+
+.project-list-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 14px;
+    border: 1px solid #2a2a2a;
+    background: #1f2937;
+}
+
+.project-list-link {
+    color: #e5e7eb;
+    text-decoration: none;
+    font-weight: 800;
+}
+
+    .project-list-link:hover {
+        color: #93c5fd;
+        text-decoration: underline;
+    }
+
+.project-list-meta {
+    margin-top: 4px;
+    color: #cbd5e1;
+    font-size: 12px;
+}
+
+.status-pill-list-active {
+    border: 1px solid rgba(16,185,129,.28);
+    background: rgba(16,185,129,.10);
+    color: #d1fae5;
+    padding: 6px 14px;
+}
+
+.searchbar-list__count {
+    color: #cbd5e1;
+    font-size: 12px;
+    margin-left: 8px;
+}
+
+.projects-list-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid #2a2a2a;
+    background: #171717;
+    color: #e2e8f0;
+    font-size: 12px;
+}
+
+.pager-list {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid #2a2a2a;
+    flex-wrap: wrap;
+}
+
+.footnote-list {
+    margin: 14px 2px 0;
+    color: #94a3b8;
+    font-size: 12px;
+    line-height: 1.6;
+}
