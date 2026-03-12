@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Text;
 using TaskStatusTransitionValidation.RazorMock.Models;
 using TaskStatusTransitionValidation.RazorMock.Services;
-using System.Text;
-using System.IO;
 
 namespace TaskStatusTransitionValidation.RazorMock.Pages.Projects.Tasks;
 
@@ -184,14 +183,15 @@ public class IndexModel(IApiClient apiClient, IMeProvider meProvider) : PageMode
     }
 
     public async Task<IActionResult> OnPostExportCsvAsync(
-    int projectId,
-    string? q,
-    string? statusF,
-    string? prioF,
-    string? dueF,
-    int pageNo,
-    int pageSize,
-    CancellationToken cancellationToken)
+        int projectId,
+        string? q,
+        string? statusF,
+        string? prioF,
+        string? dueF,
+        int pageNo,
+        int pageSize,
+        string? fileBaseName,
+        CancellationToken cancellationToken)
     {
         ProjectId = projectId;
         Q = q;
@@ -223,10 +223,22 @@ public class IndexModel(IApiClient apiClient, IMeProvider meProvider) : PageMode
             var filtered = ApplyFilters(AllTasks, Q, StatusF, PrioF, DueF);
 
             var csv = BuildTasksCsvRows(filtered, Members);
-            var fileBaseName = SanitizeFileName($"{Title}_tasks_{DateTime.Today:yyyy-MM-dd}");
-            var fileName = $"{fileBaseName}.csv";
 
-            var bytes = Encoding.UTF8.GetPreamble().Concat(Encoding.UTF8.GetBytes(csv)).ToArray();
+            var fallbackFileBaseName = $"{Title}_tasks_{DateTime.Today:yyyy-MM-dd}";
+            var normalizedFileBaseName = string.IsNullOrWhiteSpace(fileBaseName)
+                ? fallbackFileBaseName
+                : fileBaseName.Trim();
+
+            var safeFileBaseName = SanitizeFileName(normalizedFileBaseName);
+            if (string.IsNullOrWhiteSpace(safeFileBaseName))
+            {
+                safeFileBaseName = "tasks";
+            }
+
+            var fileName = $"{safeFileBaseName}.csv";
+            var bytes = Encoding.UTF8.GetPreamble()
+                .Concat(Encoding.UTF8.GetBytes(csv))
+                .ToArray();
 
             return File(bytes, "text/csv; charset=utf-8", fileName);
         }
@@ -274,8 +286,6 @@ public class IndexModel(IApiClient apiClient, IMeProvider meProvider) : PageMode
                 .ToList();
 
             BuildSummary(AllTasks);
-
-            var keyword = (Q ?? string.Empty).Trim();
 
             var filtered = ApplyFilters(AllTasks, Q, StatusF, PrioF, DueF);
 
@@ -386,7 +396,6 @@ public class IndexModel(IApiClient apiClient, IMeProvider meProvider) : PageMode
         }
 
         var s = value.Length >= 10 ? value[..10] : value;
-
         return DateOnly.TryParse(s, out var date) ? date : null;
     }
 
@@ -453,6 +462,16 @@ public class IndexModel(IApiClient apiClient, IMeProvider meProvider) : PageMode
         };
     }
 
+    public string DueFilterLabelJa(string? dueF)
+    {
+        return dueF switch
+        {
+            "Overdue" => "期限切れ",
+            "DueSoon" => "近日期限",
+            _ => "すべて"
+        };
+    }
+
     public string GetPriorityCssClass(string? priority)
     {
         return priority switch
@@ -477,11 +496,11 @@ public class IndexModel(IApiClient apiClient, IMeProvider meProvider) : PageMode
     }
 
     private List<TaskResponse> ApplyFilters(
-    IEnumerable<TaskResponse> tasks,
-    string? q,
-    string? statusF,
-    string? prioF,
-    string? dueF)
+        IEnumerable<TaskResponse> tasks,
+        string? q,
+        string? statusF,
+        string? prioF,
+        string? dueF)
     {
         var keyword = (q ?? string.Empty).Trim();
 
@@ -527,7 +546,7 @@ public class IndexModel(IApiClient apiClient, IMeProvider meProvider) : PageMode
 
                 if (string.Equals(dueF, "Overdue", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (!(due.Value < today))
+                    if (due.Value >= today)
                     {
                         return false;
                     }
@@ -546,8 +565,8 @@ public class IndexModel(IApiClient apiClient, IMeProvider meProvider) : PageMode
     }
 
     private string BuildTasksCsvRows(
-    IReadOnlyList<TaskResponse> tasks,
-    IReadOnlyList<ProjectMemberDto> members)
+        IReadOnlyList<TaskResponse> tasks,
+        IReadOnlyList<ProjectMemberDto> members)
     {
         var memberMap = members.ToDictionary(x => x.UserId, x => x);
 
@@ -555,15 +574,15 @@ public class IndexModel(IApiClient apiClient, IMeProvider meProvider) : PageMode
 
         var header = new[]
         {
-        "TaskId",
-        "Title",
-        "Description",
-        "StatusJa",
-        "Status",
-        "Priority",
-        "DueDate",
-        "AssigneeDisplayName"
-    };
+            "TaskId",
+            "Title",
+            "Description",
+            "StatusJa",
+            "Status",
+            "Priority",
+            "DueDate",
+            "AssigneeDisplayName"
+        };
 
         lines.Add(string.Join(",", header.Select(CsvEscape)));
 
@@ -580,15 +599,15 @@ public class IndexModel(IApiClient apiClient, IMeProvider meProvider) : PageMode
 
             var row = new[]
             {
-            task.TaskId.ToString(),
-            task.Title,
-            task.Description ?? string.Empty,
-            StatusLabelJa(task.Status),
-            task.Status,
-            task.Priority,
-            FormatDateForCsv(task.DueDate),
-            assigneeDisplayName
-        };
+                task.TaskId.ToString(),
+                task.Title,
+                task.Description ?? string.Empty,
+                StatusLabelJa(task.Status),
+                task.Status,
+                task.Priority,
+                FormatDateForCsv(task.DueDate),
+                assigneeDisplayName
+            };
 
             lines.Add(string.Join(",", row.Select(CsvEscape)));
         }
@@ -604,7 +623,10 @@ public class IndexModel(IApiClient apiClient, IMeProvider meProvider) : PageMode
         }
 
         var escaped = value.Replace("\"", "\"\"");
-        var needsQuote = escaped.Contains(',') || escaped.Contains('"') || escaped.Contains('\r') || escaped.Contains('\n');
+        var needsQuote = escaped.Contains(',')
+            || escaped.Contains('"')
+            || escaped.Contains('\r')
+            || escaped.Contains('\n');
 
         return needsQuote ? $"\"{escaped}\"" : escaped;
     }

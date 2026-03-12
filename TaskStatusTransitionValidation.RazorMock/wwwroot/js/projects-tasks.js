@@ -40,14 +40,13 @@
         }
     }
 
-    window.addEventListener("load", () => {
-        hideLoader();
-    });
+    window.addEventListener("load", hideLoader);
 
     document.querySelectorAll(".js-show-loader").forEach((el) => {
         el.addEventListener("click", () => {
             if (el.classList.contains("is-disabled")) return;
             if (el.hasAttribute("disabled")) return;
+            if (el.getAttribute("aria-disabled") === "true") return;
             showLoader();
         });
     });
@@ -60,21 +59,14 @@
 
     if (openCsvButton) {
         openCsvButton.addEventListener("click", () => {
+            if (openCsvButton.disabled) return;
             openCsvDialog();
         });
     }
 
     if (csvDialog) {
         csvDialog.querySelectorAll("[data-csv-close]").forEach((el) => {
-            el.addEventListener("click", () => {
-                closeCsvDialog();
-            });
-        });
-
-        csvDialog.addEventListener("click", (e) => {
-            if (e.target === csvDialog) {
-                closeCsvDialog();
-            }
+            el.addEventListener("click", closeCsvDialog);
         });
     }
 
@@ -91,8 +83,6 @@
                 csvSubmitButton.textContent = "ダウンロード中…";
             }
 
-            // CSVダウンロードは画面遷移ではないため全面ローダーは出さない
-            // 少し待ってからモーダルだけ閉じる
             window.setTimeout(() => {
                 closeCsvDialog();
             }, 800);

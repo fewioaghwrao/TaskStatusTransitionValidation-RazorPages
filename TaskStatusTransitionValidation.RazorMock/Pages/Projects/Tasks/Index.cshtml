@@ -4,6 +4,8 @@
     ViewData["Title"] = "Project Tasks";
 }
 
+<link rel="stylesheet" href="~/css/projects-tasks.css" asp-append-version="true" />
+
 <div class="tasks-page">
     <div id="pageLoader" class="fullscreen-loading" aria-live="polite" aria-busy="true">
         <div class="fullscreen-loading__panel">
@@ -16,22 +18,6 @@
             </div>
         </div>
     </div>
-
-    <style>
-        .input {
-            width: 240px;
-            max-width: 100%;
-        }
-
-        @@media (max-width: 768px) {
-            .input,
-            .select {
-                width: 100%;
-            }
-        }
-    </style>
-
-    <link rel="stylesheet" href="~/css/projects-tasks.css" asp-append-version="true" />
 
     <div class="tasks-container">
         <header class="tasks-header">
@@ -65,11 +51,8 @@
                 {
                     <form method="post"
                           asp-page-handler="ArchiveProject"
-                          onsubmit="
-            if (!confirm('この案件をアーカイブ（削除扱い）します。よろしいですか？')) return false;
-            document.getElementById('pageLoader')?.classList.remove('is-hidden');
-            return true;
-          ">
+                          class="js-show-loader-form"
+                          onsubmit="return confirm('この案件をアーカイブ（削除扱い）します。よろしいですか？');">
                         <input type="hidden" name="projectId" value="@Model.ProjectId" />
                         <button type="submit" class="btn btn-danger">案件削除（アーカイブ）</button>
                     </form>
@@ -188,7 +171,7 @@
                 </div>
 
                 <div class="summary-card__sub">
-                    現在の期限フィルタ：<strong>@Model.DueF</strong>
+                    現在の期限フィルタ：<strong>@Model.DueFilterLabelJa(Model.DueF)</strong>
                 </div>
             </div>
         </section>
@@ -209,7 +192,7 @@
                        asp-route-pageNo="@(Model.SafePage - 1)"
                        asp-route-pageSize="@Model.PageSize"
                        class="btn btn-dark js-show-loader @(Model.SafePage <= 1 ? "is-disabled" : "")"
-                       aria-disabled="@(Model.SafePage <= 1)">
+                       aria-disabled="@(Model.SafePage <= 1 ? "true" : "false")">
                         ← 前へ
                     </a>
 
@@ -224,7 +207,7 @@
                        asp-route-pageNo="@(Model.SafePage + 1)"
                        asp-route-pageSize="@Model.PageSize"
                        class="btn btn-dark js-show-loader @(Model.SafePage >= Model.TotalPages ? "is-disabled" : "")"
-                       aria-disabled="@(Model.SafePage >= Model.TotalPages)">
+                       aria-disabled="@(Model.SafePage >= Model.TotalPages ? "true" : "false")">
                         次へ →
                     </a>
                 </div>
@@ -391,7 +374,7 @@
                             <div class="task-card__top">
                                 <div>
                                     <div class="task-card__meta">ID: @t.TaskId</div>
-                                    <div style="margin-top:4px;">
+                                    <div class="task-card__body-link">
                                         <a href="/Projects/@Model.ProjectId/Tasks/@t.TaskId" class="task-link js-show-loader">
                                             @t.Title
                                         </a>
@@ -410,7 +393,7 @@
 
                             <div class="task-card__bottom">
                                 <div class="task-card__meta">
-                                    期限: <span style="color:#e5e7eb">@Model.FormatDate(t.DueDate)</span>
+                                    期限: <span>@Model.FormatDate(t.DueDate)</span>
                                 </div>
 
                                 <span class="pill @Model.GetPriorityCssClass(t.Priority)">
@@ -419,7 +402,7 @@
                             </div>
 
                             <div class="task-card__bottom">
-                                <form method="post" asp-page-handler="ChangeStatus" class="row-form js-show-loader-form" style="width:100%;">
+                                <form method="post" asp-page-handler="ChangeStatus" class="row-form js-show-loader-form">
                                     <input type="hidden" name="projectId" value="@Model.ProjectId" />
                                     <input type="hidden" name="taskId" value="@t.TaskId" />
                                     <input type="hidden" name="q" value="@Model.Q" />
@@ -431,7 +414,6 @@
 
                                     <select name="nextStatus"
                                             class="select"
-                                            style="width:100%;"
                                             @(Model.IsTaskFixed(t.Status) ? "disabled" : null)>
                                         @foreach (var s in Model.AllStatuses)
                                         {
@@ -468,7 +450,7 @@
             @if (Model.TotalFiltered > 0)
             {
                 <div class="bottom-pager">
-                    <div class="pager-text" style="min-width:auto;text-align:left;">
+                    <div class="pager-text bottom-pager__range">
                         表示範囲：@Model.DisplayStart〜@Model.DisplayEnd / @Model.TotalFiltered
                     </div>
 
@@ -482,7 +464,7 @@
                            asp-route-pageNo="@(Model.SafePage - 1)"
                            asp-route-pageSize="@Model.PageSize"
                            class="btn btn-dark js-show-loader @(Model.SafePage <= 1 ? "is-disabled" : "")"
-                           aria-disabled="@(Model.SafePage <= 1)">
+                           aria-disabled="@(Model.SafePage <= 1 ? "true" : "false")">
                             ← 前へ
                         </a>
 
@@ -497,7 +479,7 @@
                            asp-route-pageNo="@(Model.SafePage + 1)"
                            asp-route-pageSize="@Model.PageSize"
                            class="btn btn-dark js-show-loader @(Model.SafePage >= Model.TotalPages ? "is-disabled" : "")"
-                           aria-disabled="@(Model.SafePage >= Model.TotalPages)">
+                           aria-disabled="@(Model.SafePage >= Model.TotalPages ? "true" : "false")">
                             次へ →
                         </a>
                     </div>

@@ -338,6 +338,7 @@ public class IndexModelTests
             dueF: "All",
             pageNo: 1,
             pageSize: 10,
+            fileBaseName: "tasks_export",
             cancellationToken: CancellationToken.None);
 
         var fileResult = Assert.IsType<FileContentResult>(result);
