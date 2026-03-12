@@ -34,7 +34,7 @@ public class LoginModel : PageModel
         Response.Cookies.Append("auth_token", result.Token, new CookieOptions
         {
             HttpOnly = true,
-            Secure = false, // HTTPS化したら true 推奨
+            Secure = false,
             SameSite = SameSiteMode.Lax
         });
 
