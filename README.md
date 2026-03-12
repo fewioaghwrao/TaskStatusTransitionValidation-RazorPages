@@ -1,5 +1,7 @@
 # 画面設計書修正・UI改修サンプル集（Razor Pages）
 
+![CI](https://github.com/fewioaghwrao/TaskStatusTransitionValidation-RazorPages/actions/workflows/ci.yml/badge.svg)
+
 ## 概要
 
 本リポジトリは、既存の Razor Pages 制作物である  
