@@ -51,7 +51,6 @@
                 {
                     <form method="post"
                           asp-page-handler="ArchiveProject"
-                          class="js-show-loader-form"
                           onsubmit="return confirm('この案件をアーカイブ（削除扱い）します。よろしいですか？');">
                         <input type="hidden" name="projectId" value="@Model.ProjectId" />
                         <button type="submit" class="btn btn-danger">案件削除（アーカイブ）</button>
