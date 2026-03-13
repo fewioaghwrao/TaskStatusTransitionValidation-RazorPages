@@ -222,6 +222,7 @@
 .task-table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
 }
 
     .task-table th {
@@ -232,12 +233,16 @@
         font-size: 12px;
         background: #171717;
         white-space: nowrap;
+        overflow-wrap: anywhere;
+        word-break: break-word;
     }
 
     .task-table td {
         padding: 12px;
         border-bottom: 1px solid #222;
         vertical-align: top;
+        overflow-wrap: anywhere;
+        word-break: break-word;
     }
 
 .task-link {
@@ -255,6 +260,21 @@
     font-size: 12px;
     color: #9ca3af;
     line-height: 1.45;
+}
+
+.task-table td > div,
+.task-card__top > div,
+.task-card__body-link,
+.tasks-header__left {
+    min-width: 0;
+}
+
+.task-link,
+.task-desc,
+.task-card__body,
+.task-card__body-link {
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .pill-priority-high {
