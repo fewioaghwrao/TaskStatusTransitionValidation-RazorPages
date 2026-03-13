@@ -28,7 +28,7 @@ public class IndexModelTests
     }
 
     [Fact]
-    public async Task OnGetAsync_WhenMeIsNull_RedirectsToLogin()
+    public async Task OnGetAsync_WhenMeIsNull_ReturnsPageWithErrorState()
     {
         var apiMock = new Mock<IApiClient>();
         var meProviderMock = new Mock<IMeProvider>();
@@ -41,8 +41,10 @@ public class IndexModelTests
 
         var result = await model.OnGetAsync(CancellationToken.None);
 
-        var redirect = Assert.IsType<RedirectToPageResult>(result);
-        Assert.Equal("/Login", redirect.PageName);
+        Assert.IsType<PageResult>(result);
+        Assert.Equal("ユーザー情報の取得に失敗しました。", model.ErrorMessage);
+        Assert.Empty(model.ActivePageItems);
+        Assert.Empty(model.ArchivedProjects);
     }
 
     [Fact]

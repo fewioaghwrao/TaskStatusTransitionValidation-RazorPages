@@ -46,7 +46,7 @@ public class LoginModelTests
         var result = await model.OnPostAsync();
 
         Assert.IsType<PageResult>(result);
-        Assert.Equal("ログインに失敗しました。入力内容をご確認ください。", model.ErrorMessage);
+        Assert.Equal("ログインに失敗しました。入力内容をご確認いただくか、時間をおいて再度お試しください。", model.ErrorMessage);
     }
 
     [Fact]
