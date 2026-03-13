@@ -47,7 +47,7 @@ public class IndexModel(IApiClient apiClient, IMeProvider meProvider) : PageMode
             if (meResponse is null)
             {
                 SetErrorState("ユーザー情報の取得に失敗しました。");
-                return RedirectToPage("/Login");
+                return Page();
             }
 
             Me = new MeDto

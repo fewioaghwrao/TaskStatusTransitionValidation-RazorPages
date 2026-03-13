@@ -123,7 +123,9 @@ public class NewModel(IApiClient apiClient) : PageModel
         var me = await apiClient.GetMeAsync(token, cancellationToken);
         if (me is null)
         {
-            return RedirectToPage("/Login");
+            ErrorMessage = "タスク作成に必要な情報の取得に失敗しました。時間をおいて再度お試しください。";
+            IsBusy = false;
+            return Page();
         }
 
         Me = me;

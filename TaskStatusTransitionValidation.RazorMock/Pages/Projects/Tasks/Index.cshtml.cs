@@ -251,19 +251,20 @@ public class IndexModel(IApiClient apiClient, IMeProvider meProvider) : PageMode
 
     private async Task<IActionResult> LoadPageAsync(CancellationToken cancellationToken)
     {
+        var token = Request.Cookies["auth_token"];
+        if (string.IsNullOrWhiteSpace(token))
+        {
+            return RedirectToPage("/Login");
+        }
+
         try
         {
-            var token = Request.Cookies["auth_token"];
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                return RedirectToPage("/Login");
-            }
-
             var meResponse = await meProvider.GetMeAsync(token, cancellationToken);
             if (meResponse is null)
             {
                 Response.Cookies.Delete("auth_token");
-                return RedirectToPage("/Login");
+                ErrorMessage = "画面表示に必要な情報の取得に失敗しました。時間をおいて再度お試しください。";
+                return Page();
             }
 
             Me = new MeDto
@@ -280,6 +281,19 @@ public class IndexModel(IApiClient apiClient, IMeProvider meProvider) : PageMode
             Project = await apiClient.GetProjectByIdAsync(token, ProjectId, cancellationToken);
             Members = await apiClient.GetProjectMembersAsync(token, ProjectId, cancellationToken);
             AllTasks = await apiClient.GetTasksByProjectIdAsync(token, ProjectId, cancellationToken);
+
+            if (Project is null)
+            {
+                ErrorMessage = "案件情報の取得に失敗しました。時間をおいて再度お試しください。";
+                Members = [];
+                AllTasks = [];
+                FilteredTasks = [];
+                PageItems = [];
+                TotalFiltered = 0;
+                TotalPages = 1;
+                SafePage = 1;
+                return Page();
+            }
 
             AllTasks = AllTasks
                 .OrderByDescending(x => x.TaskId)
@@ -305,11 +319,17 @@ public class IndexModel(IApiClient apiClient, IMeProvider meProvider) : PageMode
         }
         catch
         {
-            Response.Cookies.Delete("auth_token");
-            return RedirectToPage("/Login");
+            ErrorMessage = "タスク一覧の取得中にエラーが発生しました。時間をおいて再度お試しください。";
+            Members = [];
+            AllTasks = [];
+            FilteredTasks = [];
+            PageItems = [];
+            TotalFiltered = 0;
+            TotalPages = 1;
+            SafePage = 1;
+            return Page();
         }
     }
-
     private IActionResult RedirectToCurrentPage()
     {
         return RedirectToPage("/Projects/Tasks/Index", new

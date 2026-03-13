@@ -23,21 +23,29 @@ public class LoginModel : PageModel
             return Page();
         }
 
-        var result = await _api.LoginAsync(Input);
-
-        if (result == null)
+        try
         {
-            ErrorMessage = "ログインに失敗しました。入力内容をご確認ください。";
+            var result = await _api.LoginAsync(Input);
+
+            if (result == null)
+            {
+                ErrorMessage = "ログインに失敗しました。入力内容をご確認いただくか、時間をおいて再度お試しください。";
+                return Page();
+            }
+
+            Response.Cookies.Append("auth_token", result.Token, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = false,
+                SameSite = SameSiteMode.Lax
+            });
+
+            return RedirectToPage("/Projects/Index");
+        }
+        catch
+        {
+            ErrorMessage = "ログイン処理中にエラーが発生しました。時間をおいて再度お試しください。";
             return Page();
         }
-
-        Response.Cookies.Append("auth_token", result.Token, new CookieOptions
-        {
-            HttpOnly = true,
-            Secure = false,
-            SameSite = SameSiteMode.Lax
-        });
-
-        return RedirectToPage("/Projects/Index");
     }
 }

@@ -9,6 +9,8 @@ builder.Services.AddHttpClient<IApiClient, ApiClient>(client =>
     client.BaseAddress = new Uri(
         builder.Configuration["Api:BaseUrl"]
         ?? throw new InvalidOperationException("Api:BaseUrl Ç™ñ¢ê›íËÇ≈Ç∑ÅB"));
+
+    client.Timeout = TimeSpan.FromSeconds(10);
 });
 
 builder.Services.AddScoped<IMeProvider, ApiMeProvider>();

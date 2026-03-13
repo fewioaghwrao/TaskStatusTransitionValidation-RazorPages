@@ -28,8 +28,8 @@ public class NewModel(IApiClient apiClient) : PageModel
         var me = await apiClient.GetMeAsync(token, cancellationToken);
         if (me is null)
         {
-            Response.Cookies.Delete("auth_token");
-            return RedirectToPage("/Login");
+            ErrorMessage = "画面表示に必要な情報の取得に失敗しました。時間をおいて再度お試しください。";
+            return Page();
         }
 
         Me = me;
@@ -53,8 +53,8 @@ public class NewModel(IApiClient apiClient) : PageModel
         Me = await apiClient.GetMeAsync(token, cancellationToken);
         if (Me is null)
         {
-            Response.Cookies.Delete("auth_token");
-            return RedirectToPage("/Login");
+            ErrorMessage = "案件作成に必要な情報の取得に失敗しました。時間をおいて再度お試しください。";
+            return Page();
         }
 
         var name = (Input.Name ?? string.Empty).Trim();
