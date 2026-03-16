@@ -41,6 +41,7 @@ flowchart TD
     C --> F[Before / After 資料化]
     C --> G[修正概要資料の作成]
     C --> H[必要に応じた軽微な挙動補正]
+    C --> I[総合テスト資料の整理]
 ```
 
 ---
@@ -141,26 +142,63 @@ flowchart TD
 
 ---
 
+## テスト・確認資料
+
+本リポジトリでは、画面修正後の見た目確認だけでなく、各画面ごとに  
+総合テスト計画書、確認観点一覧、総合テストケース、実施結果 を整理しています。
+
+主に以下の観点で確認を実施しています。
+
+- 初期表示
+- 入力／操作
+- 画面遷移
+- 条件分岐
+- 権限制御
+- 異常系表示
+- 件数表示、検索、ページングなどの画面機能確認
+
+これにより、単なるUI差し替えではなく、  
+**修正内容の整理から確認観点の明確化、実施結果の記録まで含めた対応** を行っています。
+
+---
+
 ## 資料構成
 
 ```text
 docs/
-├─ projects/
-│  ├─ images/
-│  │  ├─ before-projects.png
-│  │  └─ after-projects.png
-│  ├─ 案件一覧画面_修正概要.md
-│  └─ 案件一覧画面_修正差分表.xlsx
 ├─ login/
 │  ├─ images/
 │  │  ├─ before-login.png
 │  │  └─ after-login.png
+│  ├─ test/
+│  │  ├─ ログイン画面_総合テスト計画書.md
+│  │  ├─ 確認観点一覧.tsv
+│  │  ├─ 総合テストケース.tsv
+│  │  └─ 実施結果.md
 │  ├─ ログイン画面_修正概要.md
 │  └─ ログイン画面_修正差分表.xlsx
+├─ projects/
+│  ├─ images/
+│  │  ├─ before-projects.png
+│  │  └─ after-projects.png
+│  ├─ projects-list/
+│  │  └─ test/
+│  │     ├─ 案件一覧画面_総合テスト計画書.md
+│  │     ├─ 確認観点一覧.tsv
+│  │     ├─ 総合テストケース.tsv
+│  │     └─ 実施結果.md
+│  ├─ 案件一覧画面_修正概要.md
+│  └─ 案件一覧画面_修正差分表.xlsx
 └─ tasks/
    ├─ images/
    │  ├─ before-tasks.png
    │  └─ after-tasks.png
+   ├─ task-list/
+   │  └─ test/
+   │     ├─ タスク一覧画面_総合テスト計画書.md
+   │     ├─ 確認観点一覧.tsv
+   │     ├─ 総合テストケース.tsv
+   │     └─ 実施結果.md
    ├─ タスク一覧画面_修正概要.md
    └─ タスク一覧画面_修正差分表.xlsx
 ```
@@ -174,18 +212,30 @@ docs/
 ### 案件一覧画面
 - 修正概要: `docs/projects/案件一覧画面_修正概要.md`
 - 修正差分表: `docs/projects/案件一覧画面_修正差分表.xlsx`
+- 総合テスト計画: `docs/projects/projects-list/test/案件一覧画面_総合テスト計画書.md`
+- 確認観点一覧: `docs/projects/projects-list/test/確認観点一覧.tsv`
+- 総合テストケース: `docs/projects/projects-list/test/総合テストケース.tsv`
+- 実施結果: `docs/projects/projects-list/test/実施結果.md`
 - Before画像: `docs/projects/images/before-projects.png`
 - After画像: `docs/projects/images/after-projects.png`
 
 ### ログイン画面
 - 修正概要: `docs/login/ログイン画面_修正概要.md`
 - 修正差分表: `docs/login/ログイン画面_修正差分表.xlsx`
+- 総合テスト計画: `docs/login/test/ログイン画面_総合テスト計画書.md`
+- 確認観点一覧: `docs/login/test/確認観点一覧.tsv`
+- 総合テストケース: `docs/login/test/総合テストケース.tsv`
+- 実施結果: `docs/login/test/実施結果.md`
 - Before画像: `docs/login/images/before-login.png`
 - After画像: `docs/login/images/after-login.png`
 
 ### タスク一覧画面
 - 修正概要: `docs/tasks/タスク一覧画面_修正概要.md`
 - 修正差分表: `docs/tasks/タスク一覧画面_修正差分表.xlsx`
+- 総合テスト計画: `docs/tasks/task-list/test/タスク一覧画面_総合テスト計画書.md`
+- 確認観点一覧: `docs/tasks/task-list/test/確認観点一覧.tsv`
+- 総合テストケース: `docs/tasks/task-list/test/総合テストケース.tsv`
+- 実施結果: `docs/tasks/task-list/test/実施結果.md`
 - Before画像: `docs/tasks/images/before-tasks.png`
 - After画像: `docs/tasks/images/after-tasks.png`
 
@@ -237,6 +287,7 @@ docs/
 - Before / After による改善内容の可視化
 - UI修正に付随する軽微な挙動改善
 - 必要に応じた画面ロジックの補助的な整理
+- 総合テスト観点の整理と実施結果の記録
 
 これにより、**既存画面の改修経験** と **画面修正資料の整理力** の両方を補足できる構成を目指しています。
 
@@ -246,6 +297,7 @@ docs/
 
 - 画面ごとの修正観点の比較整理
 - 画面単位CSSの整理方針の明文化
+- テスト観点の横断整理
 - 必要に応じたREADMEの更新
 
 ---
@@ -256,4 +308,4 @@ docs/
 [TaskStatusTransitionValidation_Razor](https://github.com/fewioaghwrao/TaskStatusTransitionValidation_Razor)  
 を題材として、画面修正・設計資料整理の観点をまとめたものです。
 
-業務仕様や文言の大幅な変更を主目的とするものではなく、**既存UIを前提とした改善・整理・差分管理** に重点を置いています。
+業務仕様や文言の大幅な変更を主目的とするものではなく、**既存UIを前提とした改善・整理・差分管理・確認資料整備** に重点を置いています。
