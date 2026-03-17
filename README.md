@@ -146,6 +146,7 @@ flowchart TD
 
 本リポジトリでは、画面修正後の見た目確認だけでなく、各画面ごとに  
 総合テスト計画書、確認観点一覧、総合テストケース、実施結果 を整理しています。
+あわせて、各画面について本番移行手順書、差分資材一覧、反映後確認チェックリスト、切り戻し手順書も整理している。
 
 主に以下の観点で確認を実施しています。
 
@@ -156,6 +157,7 @@ flowchart TD
 - 権限制御
 - 異常系表示
 - 件数表示、検索、ページングなどの画面機能確認
+  
 
 これにより、単なるUI差し替えではなく、  
 **修正内容の整理から確認観点の明確化、実施結果の記録まで含めた対応** を行っています。
@@ -172,9 +174,14 @@ docs/
 │  │  └─ after-login.png
 │  ├─ test/
 │  │  ├─ ログイン画面_総合テスト計画書.md
-│  │  ├─ 確認観点一覧.tsv
-│  │  ├─ 総合テストケース.tsv
-│  │  └─ 実施結果.md
+│  │  ├─ ログイン画面_確認観点一覧.tsv
+│  │  ├─ ログイン画面_総合テストケース.tsv
+│  │  └─ ログイン画面_実施結果.md
+│  ├─ release/
+│  │  ├─ ログイン画面_本番移行手順書.md
+│  │  ├─ ログイン画面_差分資材一覧.tsv
+│  │  ├─ ログイン画面_反映後確認チェックリスト.tsv
+│  │  └─ ログイン画面_切り戻し手順書.md
 │  ├─ ログイン画面_修正概要.md
 │  └─ ログイン画面_修正差分表.xlsx
 ├─ projects/
@@ -182,11 +189,16 @@ docs/
 │  │  ├─ before-projects.png
 │  │  └─ after-projects.png
 │  ├─ projects-list/
-│  │  └─ test/
-│  │     ├─ 案件一覧画面_総合テスト計画書.md
-│  │     ├─ 確認観点一覧.tsv
-│  │     ├─ 総合テストケース.tsv
-│  │     └─ 実施結果.md
+│  │  ├─ test/
+│  │  │  ├─ 案件一覧画面_総合テスト計画書.md
+│  │  │  ├─ 案件一覧画面_確認観点一覧.tsv
+│  │  │  ├─ 案件一覧画面_総合テストケース.tsv
+│  │  │  └─ 案件一覧画面_実施結果.md
+│  │  └─ release/
+│  │     ├─ 案件一覧画面_本番移行手順書.md
+│  │     ├─ 案件一覧画面_差分資材一覧.tsv
+│  │     ├─ 案件一覧画面_反映後確認チェックリスト.tsv
+│  │     └─ 案件一覧画面_切り戻し手順書.md
 │  ├─ 案件一覧画面_修正概要.md
 │  └─ 案件一覧画面_修正差分表.xlsx
 └─ tasks/
@@ -194,11 +206,16 @@ docs/
    │  ├─ before-tasks.png
    │  └─ after-tasks.png
    ├─ task-list/
-   │  └─ test/
-   │     ├─ タスク一覧画面_総合テスト計画書.md
-   │     ├─ 確認観点一覧.tsv
-   │     ├─ 総合テストケース.tsv
-   │     └─ 実施結果.md
+   │  ├─ test/
+   │  │  ├─ タスク一覧画面_総合テスト計画書.md
+   │  │  ├─ タスク一覧画面_確認観点一覧.tsv
+   │  │  ├─ タスク一覧画面_総合テストケース.tsv
+   │  │  └─ タスク一覧画面_実施結果.md
+   │  └─ release/
+   │     ├─ タスク一覧画面_本番移行手順書.md
+   │     ├─ タスク一覧画面_差分資材一覧.tsv
+   │     ├─ タスク一覧画面_反映後確認チェックリスト.tsv
+   │     └─ タスク一覧画面_切り戻し手順書.md
    ├─ タスク一覧画面_修正概要.md
    └─ タスク一覧画面_修正差分表.xlsx
 ```
@@ -213,31 +230,43 @@ docs/
 - 修正概要: `docs/projects/案件一覧画面_修正概要.md`
 - 修正差分表: `docs/projects/案件一覧画面_修正差分表.xlsx`
 - 総合テスト計画: `docs/projects/projects-list/test/案件一覧画面_総合テスト計画書.md`
-- 確認観点一覧: `docs/projects/projects-list/test/確認観点一覧.tsv`
-- 総合テストケース: `docs/projects/projects-list/test/総合テストケース.tsv`
-- 実施結果: `docs/projects/projects-list/test/実施結果.md`
+- 確認観点一覧: `docs/projects/projects-list/test/案件一覧画面_確認観点一覧.tsv`
+- 総合テストケース: `docs/projects/projects-list/test/案件一覧画面_総合テストケース.tsv`
+- 実施結果: `docs/projects/projects-list/test/案件一覧画面_実施結果.md`
 - Before画像: `docs/projects/images/before-projects.png`
 - After画像: `docs/projects/images/after-projects.png`
+- 本番移行手順書: `docs/projects/projects-list/release/案件一覧画面_本番移行手順書.md`
+- 差分資材一覧: `docs/projects/projects-list/release/案件一覧画面_差分資材一覧.tsv`
+- 反映後確認チェックリスト: `docs/projects/projects-list/release/案件一覧画面_反映後確認チェックリスト.tsv`
+- 切り戻し手順書: `docs/projects/projects-list/release/案件一覧画面_切り戻し手順書.md`
 
 ### ログイン画面
 - 修正概要: `docs/login/ログイン画面_修正概要.md`
 - 修正差分表: `docs/login/ログイン画面_修正差分表.xlsx`
 - 総合テスト計画: `docs/login/test/ログイン画面_総合テスト計画書.md`
-- 確認観点一覧: `docs/login/test/確認観点一覧.tsv`
-- 総合テストケース: `docs/login/test/総合テストケース.tsv`
-- 実施結果: `docs/login/test/実施結果.md`
+- 確認観点一覧: `docs/login/test/ログイン画面_確認観点一覧.tsv`
+- 総合テストケース: `docs/login/test/ログイン画面_総合テストケース.tsv`
+- 実施結果: `docs/login/test/ログイン画面_実施結果.md`
 - Before画像: `docs/login/images/before-login.png`
 - After画像: `docs/login/images/after-login.png`
+- 本番移行手順書: `docs/login/release/ログイン画面_本番移行手順書.md`
+- 差分資材一覧: `docs/login/release/ログイン画面_差分資材一覧.tsv`
+- 反映後確認チェックリスト: `docs/login/release/ログイン画面_反映後確認チェックリスト.tsv`
+- 切り戻し手順書: `docs/login/release/ログイン画面_切り戻し手順書.md`
 
 ### タスク一覧画面
 - 修正概要: `docs/tasks/タスク一覧画面_修正概要.md`
 - 修正差分表: `docs/tasks/タスク一覧画面_修正差分表.xlsx`
 - 総合テスト計画: `docs/tasks/task-list/test/タスク一覧画面_総合テスト計画書.md`
-- 確認観点一覧: `docs/tasks/task-list/test/確認観点一覧.tsv`
-- 総合テストケース: `docs/tasks/task-list/test/総合テストケース.tsv`
-- 実施結果: `docs/tasks/task-list/test/実施結果.md`
+- 確認観点一覧: `docs/tasks/task-list/test/タスク一覧画面_確認観点一覧.tsv`
+- 総合テストケース: `docs/tasks/task-list/test/タスク一覧画面_総合テストケース.tsv`
+- 実施結果: `docs/tasks/task-list/test/タスク一覧画面_実施結果.md`
 - Before画像: `docs/tasks/images/before-tasks.png`
 - After画像: `docs/tasks/images/after-tasks.png`
+- 本番移行手順書: `docs/tasks/task-list/release/タスク一覧画面_本番移行手順書.md`
+- 差分資材一覧: `docs/tasks/task-list/release/タスク一覧画面_差分資材一覧.tsv`
+- 反映後確認チェックリスト: `docs/tasks/task-list/release/タスク一覧画面_反映後確認チェックリスト.tsv`
+- 切り戻し手順書: `docs/tasks/task-list/release/タスク一覧画面_切り戻し手順書.md`
 
 ---
 
