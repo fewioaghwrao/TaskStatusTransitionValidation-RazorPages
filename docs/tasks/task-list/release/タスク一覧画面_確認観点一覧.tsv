@@ -1,0 +1,18 @@
+No	区分	対象機能	ファイル分類	ファイルパス	新規/修正/削除	変更内容	反映要否	備考
+1	画面	タスク一覧画面	View	TaskStatusTransitionValidation.RazorMock/Pages/Projects/Tasks/Index.cshtml	修正	タスク一覧画面のタイトル、説明文、戻る導線、一覧表示、状態表示、CSV出力導線、エラー表示のUI修正	要	
+2	画面	タスク一覧処理	PageModel	TaskStatusTransitionValidation.RazorMock/Pages/Projects/Tasks/Index.cshtml.cs	修正	一覧取得、状態変更、通信例外時表示、不正操作時エラー表示の処理確認	要	
+3	CSS	共通	Stylesheet	TaskStatusTransitionValidation.RazorMock/wwwroot/css/site.css	修正	共通スタイル調整	要	他画面影響確認要
+4	CSS	タスク一覧画面	Stylesheet	TaskStatusTransitionValidation.RazorMock/wwwroot/css/tasks.css	新規/修正	タスク一覧画面専用スタイル追加・調整	要	該当変更がある場合のみ反映対象
+5	JS	タスク一覧画面	JavaScript	TaskStatusTransitionValidation.RazorMock/wwwroot/js/projects-tasks.js	修正	CSV出力、ダイアログ、一覧操作関連のスクリプト調整	要	該当変更がある場合のみ反映対象
+6	資料	タスク一覧画面	Document	docs/tasks/task-list/タスク一覧画面_修正概要.md	修正	修正概要資料更新	不要	本番反映対象外
+7	資料	タスク一覧画面	Document	docs/tasks/task-list/タスク一覧画面_修正差分表.xlsx	修正	差分表更新	不要	本番反映対象外
+8	資料	タスク一覧画面テスト	Document	docs/tasks/task-list/test/タスク一覧画面_総合テスト計画書.md	修正	総合テスト計画書更新	不要	本番反映対象外
+9	資料	タスク一覧画面テスト	Document	docs/tasks/task-list/test/タスク一覧画面_確認観点一覧.tsv	修正	確認観点一覧更新	不要	本番反映対象外
+10	資料	タスク一覧画面テスト	Document	docs/tasks/task-list/test/タスク一覧画面_総合テストケース.tsv	修正	総合テストケース更新	不要	本番反映対象外
+11	資料	タスク一覧画面テスト	Document	docs/tasks/task-list/test/タスク一覧画面_実施結果.md	修正	実施結果更新	不要	本番反映対象外
+12	画像	タスク一覧画面	Image	docs/tasks/task-list/images/before-task-list.png	追加/更新	Before画面キャプチャ	不要	本番反映対象外
+13	画像	タスク一覧画面	Image	docs/tasks/task-list/images/after-task-list.png	追加/更新	After画面キャプチャ	不要	本番反映対象外
+14	資料	タスク一覧画面リリース	Document	docs/tasks/task-list/release/タスク一覧画面_本番移行手順書.md	新規/修正	本番移行手順書作成・更新	不要	本番反映対象外
+15	資料	タスク一覧画面リリース	Document	docs/tasks/task-list/release/タスク一覧画面_差分資材一覧.tsv	新規/修正	差分資材一覧作成・更新	不要	本番反映対象外
+16	資料	タスク一覧画面リリース	Document	docs/tasks/task-list/release/タスク一覧画面_反映後確認チェックリスト.tsv	新規/修正	反映後確認チェックリスト作成・更新	不要	本番反映対象外
+17	資料	タスク一覧画面リリース	Document	docs/tasks/task-list/release/タスク一覧画面_切り戻し手順書.md	新規/修正	切り戻し手順書作成・更新	不要	本番反映対象外
